@@ -47,14 +47,15 @@
             points)))
 
 (defun ivy-point-history--action (point)
-  (let* ((buffer-str (get-text-property 0 'point-history-buffer point))
-         (buffer (get-buffer buffer-str))
+  (let* ((buffer-name (get-text-property 0 'point-history-buffer point))
+         (buffer (get-buffer buffer-name))
 	 (pos-str (get-text-property 0 'point-history-position point))
          (pos (string-to-number pos-str)))
-    (if (null buffer-str)
+    (if (null buffer-name)
 	(message "No point at this line.")
-      (point-history--preview-at-point buffer pos)
-      (point-history--goto buffer-str pos))))
+      (with-ivy-window
+        (switch-to-buffer buffer-name)
+        (goto-char pos)))))
 
 (defun ivy-point-history ()
   "Ivy interface for point-history."
