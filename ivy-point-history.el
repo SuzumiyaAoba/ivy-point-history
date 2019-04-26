@@ -31,20 +31,21 @@
 (require 'ivy)
 (require 'point-history)
 
+(defun ivy-point-history--readable-point-str (point)
+  (let* ((pos-info (format "%s" (marker-position (nth 0 point))))
+	 (buffer-info (format "%s" (marker-buffer (nth 0 point))))
+	 (content-info (format "%s" (nth 1 point)))
+	 (str (concat buffer-info ": " content-info)))
+    (propertize str
+                'point-history-buffer buffer-info
+                'point-history-position pos-info)))
+
 (defun ivy-point-history--list-candidates ()
   (let* ((points point-history-list)
 	 (header "buffer:content"))
     (point-history--save-last-visited-buffer! (current-buffer))
     (point-history--save-last-previewed-buffer! (current-buffer))
-    (mapcar (lambda (point)
-                (let* ((pos-info (format "%s" (marker-position (nth 0 point))))
-	               (buffer-info (format "%s" (marker-buffer (nth 0 point))))
-	               (content-info (format "%s" (nth 1 point)))
-	               (str (concat buffer-info ": " content-info)))
-                  (propertize str
-                              'point-history-buffer buffer-info
-                              'point-history-position pos-info)))
-            points)))
+    (mapcar #'ivy-point-history--readable-point-str points)))
 
 (defun ivy-point-history--action (point)
   (let* ((buffer-name (get-text-property 0 'point-history-buffer point))
