@@ -62,6 +62,7 @@
         (switch-to-buffer buffer-name)
         (goto-char pos)))))
 
+;;;###autoload
 (defun ivy-point-history ()
   "Ivy interface for point-history."
   (interactive)
