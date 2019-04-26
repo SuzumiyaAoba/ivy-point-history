@@ -49,7 +49,6 @@
 
 (defun ivy-point-history--action (point)
   (let* ((buffer-name (get-text-property 0 'point-history-buffer point))
-         (buffer (get-buffer buffer-name))
 	 (pos-str (get-text-property 0 'point-history-position point))
          (pos (string-to-number pos-str)))
     (if (null buffer-name)
