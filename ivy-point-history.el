@@ -19,7 +19,7 @@
 ;; Author: SuzumiyaAoba
 ;; Package-Requires: ((point-history "0.1.0") (ivy "0.11.0"))
 ;; URL: https://github.com/SuzumiyaAoba/ivy-point-history
-;; Version: 0.0.1
+;; Version: 0.0.2
 
 ;;; Commentary:
 
@@ -30,6 +30,11 @@
 
 (require 'ivy)
 (require 'point-history)
+
+(defgroup ivy-point-history nil
+  "point-history with ivy interface"
+  :prefix "ivy-point-history-"
+  :group 'ivy)
 
 (defun ivy-point-history--readable-point-str (point)
   (let* ((pos-info (format "%s" (marker-position (nth 0 point))))
