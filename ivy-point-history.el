@@ -19,7 +19,7 @@
 ;; Author: SuzumiyaAoba
 ;; Package-Requires: ((point-history "0.1.0") (ivy "0.11.0"))
 ;; URL: https://github.com/SuzumiyaAoba/ivy-point-history
-;; Version: 0.0.2
+;; Version: 0.0.3
 
 ;;; Commentary:
 
@@ -54,13 +54,14 @@
 
 (defun ivy-point-history--action (point)
   (let* ((buffer-name (get-text-property 0 'point-history-buffer point))
-	 (pos-str (get-text-property 0 'point-history-position point))
-         (pos (string-to-number pos-str)))
-    (if (null buffer-name)
+	 (pos-str (get-text-property 0 'point-history-position point)))
+    (if (or (null buffer-name) (null pos-str)) 
 	(message "No point at this line.")
       (with-ivy-window
-        (switch-to-buffer buffer-name)
-        (goto-char pos)))))
+        (let ((buffer (get-buffer buffer-name))
+              (pos (string-to-number pos-str)))
+          (switch-to-buffer buffer-name)
+          (goto-char pos))))))
 
 ;;;###autoload
 (defun ivy-point-history ()
