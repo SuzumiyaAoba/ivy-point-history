@@ -1,4 +1,4 @@
-;;; ivy-point-history --- point-history with ivy interface
+;;; ivy-point-history.el --- point-history with ivy interface
 
 ;; Copyright (C) 2019 SuzumiyaAoba
 
@@ -55,7 +55,7 @@
 (defun ivy-point-history--action (point)
   (let* ((buffer-name (get-text-property 0 'point-history-buffer point))
 	 (pos-str (get-text-property 0 'point-history-position point)))
-    (if (or (null buffer-name) (null pos-str)) 
+    (if (or (null buffer-name) (null pos-str))
 	(message "No point at this line.")
       (with-ivy-window
         (let ((buffer (get-buffer buffer-name))
@@ -77,4 +77,4 @@
 
 (provide 'ivy-point-history)
 
-;;; ivy-point-history.el ends here
+;;; ivy-point-history ends here
